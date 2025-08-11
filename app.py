@@ -4,7 +4,7 @@ import sqlite3
 #super cool functions to generate and check password password hashes
 from werkzeug.security import generate_password_hash, check_password_hash
 
-#create app 
+#create app  
 app = Flask(__name__)
 
 #secret key is needed for sessions and flash messages
