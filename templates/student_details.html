@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="two-column">
+    <div class="w3-card-4">
+        <img src="{{ student[5] }}" alt="{{ student[1][1] }}">
+    </div>
+    <div class="info w3-card-4">
+        <div class="student-info-table">
+            <table>
+                <tr>
+                    <th> Name </th>
+                    <td> {{ student[1][1] }} </td>
+                </tr>
+                <tr>
+                    <th> Age </th>
+                    <td> {{ student[2][2] }} </td>
+                </tr>
+                <tr>
+                    <th> Year </th>
+                    <td> {{ student[3][3] }} </td>
+                </tr>
+                <tr>
+                    <th> Pronounce </th>
+                    <td> {{ student[6] }} </td>
+                </tr>
+        
+            </table>
+
+
+        </div>
+        <div class="courses-table">
+            <table>
+                <tr>
+                    <th colspan="2"> Courses </th>
+                </tr>
+                <tr>
+                    <th> <h3> <strong> Course </strong> </h3> </th>
+                    <th> <h3> <strong> Teacher </strong> </h3> </th>
+                </tr>
+                {% for course in student %}
+                <tr>
+                    <td> <h3>{{ course[8] }}</h3> </td>
+                    <td> <h3>{{ course[9] }} {{ course[10] }}</h3> </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

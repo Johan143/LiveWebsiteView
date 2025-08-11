@@ -1,0 +1,360 @@
+-- database: ./database.db
+
+--- Users table ---
+CREATE TABLE User (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, role TEXT); 
+
+--- Yearlevels table ---
+CREATE TABLE YearLevels (ID INTEGER PRIMARY KEY AUTOINCREMENT, Year INTEGER NOT NULL);
+
+INSERT INTO YearLevels (Year) VALUES
+(7), (8), (9), (10), (11), (12), (13);
+
+--- CourseYearLevels table ---
+CREATE TABLE CourseYearLevels (
+    CourseID INTEGER,
+    YearLevelID INTEGER,
+    FOREIGN KEY (CourseID) REFERENCES Courses(ID),
+    FOREIGN KEY (YearLevelID) REFERENCES YearLevels(ID)
+);
+
+
+
+--- Courses Table ---
+
+CREATE TABLE Courses (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    SubjectID INTEGER NOT NULL,
+    TeacherID INTEGER NOT NULL,
+    ClassGroupID INTEGER,
+    FOREIGN KEY (SubjectID) REFERENCES Subjects(ID),
+    FOREIGN KEY (TeacherID) REFERENCES Teachers(ID),
+    FOREIGN KEY (ClassGroupID) REFERENCES ClassGroups(ID)
+);
+
+INSERT INTO Courses (SubjectID, TeacherID, ClassGroupID) VALUES
+(1, 1, 1), -- Math, Teacher 1, Group A
+(1, 1, 2), -- Math, Teacher 1, Group B
+(2, 2, NULL); -- Biology, Teacher 2, no specific class group
+
+
+--- StudentCourses ---
+
+--- year 9, group b ---
+INSERT INTO StudentCourses (StudentID, CourseID) VALUES
+(4, 11), (4, 12), (4, 13), (4, 14), (4, 15),
+(23, 11), (23, 12), (23, 13), (23, 14), (23, 15),
+(31, 11), (31, 12), (31, 13), (31, 14), (31, 15),
+(60, 11), (60, 12), (60, 13), (60, 14), (60, 15),
+(67, 11), (67, 12), (67, 13), (67, 14), (67, 15),
+(83, 11), (83, 12), (83, 13), (83, 14), (83, 15),
+(98, 11), (98, 12), (98, 13), (98, 14), (98, 15),
+(108, 11), (108, 12), (108, 13), (108, 14), (108, 15)
+;
+
+--- year 9, group c ---
+INSERT INTO StudentCourses (StudentID, CourseID) VALUES
+(43, 21), (43, 22), (43, 23), (43, 24), (43, 25),
+(49, 21), (49, 22), (49, 23), (49, 24), (49, 25),
+(63, 21), (63, 22), (63, 23), (63, 24), (63, 25),
+(76, 21), (76, 22), (76, 23), (76, 24), (76, 25),
+(93, 21), (93, 22), (93, 23), (93, 24), (93, 25),
+(113, 21), (113, 22), (113, 23), (113, 24), (113, 25)
+;
+
+--- year 10, group a ---
+INSERT INTO StudentCourses (StudentID, CourseID) VALUES
+(40, 6), (40, 7), (40, 8), (40, 9), (40, 10),
+(51, 6), (51, 7), (51, 8), (51, 9), (51, 10),
+(65, 6), (65, 7), (65, 8), (65, 9), (65, 10),
+(84, 6), (84, 7), (84, 8), (84, 9), (84, 10),
+(94, 6), (94, 7), (94, 8), (94, 9), (94, 10),
+(104, 6), (104, 7), (104, 8), (104, 9), (104, 10)
+;
+
+--- year 10, group b ---
+INSERT INTO StudentCourses (StudentID, CourseID) VALUES
+(7, 16), (7, 17), (7, 18), (7, 19), (7, 20),
+(8, 16), (8, 17), (8, 18), (8, 19), (8, 20),
+(12, 16), (12, 17), (12, 18), (12, 19), (12, 20),
+(25, 16), (25, 17), (25, 18), (25, 19), (25, 20),
+(32, 16), (32, 17), (32, 18), (32, 19), (32, 20),
+(44, 16), (44, 17), (44, 18), (44, 19), (44, 20),
+(61, 16), (61, 17), (61, 18), (61, 19), (61, 20),
+(68, 16), (68, 17), (68, 18), (68, 19), (68, 20),
+(79, 16), (79, 17), (79, 18), (79, 19), (79, 20),
+(99, 16), (99, 17), (99, 18), (99, 19), (99, 20),
+(114, 16), (114, 17), (114, 18), (114, 19), (114, 20)
+;
+
+--- year 10, group c ---
+INSERT INTO StudentCourses (StudentID, CourseID) VALUES
+(22, 26), (22, 27), (22, 28), (22, 29), (22, 30),
+(35, 26), (35, 27), (35, 28), (35, 29), (35, 30),
+(56, 26), (56, 27), (56, 28), (56, 29), (56, 30),
+(73, 26), (73, 27), (73, 28), (73, 29), (73, 30),
+(89, 26), (89, 27), (89, 28), (89, 29), (89, 30),
+(109, 26), (109, 27), (109, 28), (109, 29), (109, 30)
+;
+
+SELECT  Students.ID AS StudentID, Courses.ID AS CourseID, Courses.SubjectID, Courses.ClassGroupID, Courses.YearLevelID, Students.ClassGroupID AS StudentClassGroupID
+FROM Courses
+JOIN Students ON Students.ClassGroupID = Courses.ClassGroupID
+WHERE Courses.ClassGroupID = 12
+    AND Students.ID NOT IN (1, 2, 3, 4, 5, 6, 9, 16, 23, 28, 38, 55, 72, 88, 103);
+
+
+--- ClassGroups Table ---
+
+CREATE TABLE ClassGroups ( 
+    ID INTEGER PRIMARY KEY AUTOINCREMENT, 
+    Name TEXT,
+    Year INTEGER NOT NULL);
+
+
+--- Subjects Table ---
+CREATE TABLE Subjects ( ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT);
+
+INSERT INTO Subjects (Name) VALUES
+('Mathematics'),
+('Biology'),
+('English'),
+('History'),
+('Digital Technology'),
+('Physics'),
+('Chemistry'),
+('Physical Education'),
+('Music'),
+('Art'),
+('Health'),
+('Drama'),
+('Wood Technology'),
+('Food Technology'),
+('Languages'),
+('Business'),
+('Media'),
+('Geography'),
+('Social Studies');
+
+
+--- Teachers Table ---
+CREATE TABLE Teachers ( ID INTEGER PRIMARY KEY AUTOINCREMENT, FirstName TEXT, LastName TEXT, Email TEXT, Username TEXT, Password TEXT);
+
+INSERT INTO Teachers (FirstName, LastName, Email, Username, Password)
+VALUES 
+('Emma', 'Thompson', 'emma.thompson@school.edu', 'ethompson', 'Pass1234'),
+('John', 'Smith', 'john.smith@school.edu', 'jsmith', 'MathRocks1'),
+('Sarah', 'Patel', 'sarah.patel@school.edu', 'spatel', 'SciLove22'),
+('Lucy', 'Brown', 'lucy.brown@school.edu', 'lbrown', 'Zebra42$moon'),
+('David', 'Lee', 'david.lee@school.edu', 'dlee', 'Quiet!Sun9'),
+('Alice', 'Wong', 'alice.wong@school.edu', 'awong', 'Maple@88'),
+('Michael', 'Green', 'michael.green@school.edu', 'mgreen', 'Rocket*19'),
+('Olivia', 'Harris', 'olivia.harris@school.edu', 'oharris', 'MintyCloud7'),
+('Tom', 'Carter', 'tom.carter@school.edu', 'tcarter', 'BlueTiger33'),
+('Rachel', 'Adams', 'rachel.adams@school.edu', 'radams', 'LuckyBean5'),
+('Ella', 'White', 'ella.white@school.edu', 'ewhite', 'Piano!42'),
+('James', 'Bell', 'james.bell@school.edu', 'jbell', 'SunnyRain8'),
+('Sophie', 'Evans', 'sophie.evans@school.edu', 'sevans', 'ForestWave9'),
+('Nathan', 'Scott', 'nathan.scott@school.edu', 'nscott', 'BookRide21'),
+('Megan', 'Brooks', 'megan.brooks@school.edu', 'mbrooks', 'Cactus#27'),
+('Kevin', 'Young', 'kevin.young@school.edu', 'kyoung', 'JazzStone3'),
+('Julia', 'Kim', 'julia.kim@school.edu', 'jkim', 'CookieFox12'),
+('Daniel', 'Clark', 'daniel.clark@school.edu', 'dclark', 'RiverMint6'),
+('Fiona', 'Wright', 'fiona.wright@school.edu', 'fwright', 'OceanLeaf1');
+
+-- insert 20 more teachers in the teachers table --
+INSERT INTO teachers (ID, FirstName, LastName, Email, Username, Password) VALUES
+(22, 'Lily', 'Morgan', 'lily.morgan@school.edu', 'lmorgan', 'River$Flow8'),
+(23, 'George', 'Parker', 'george.parker@school.edu', 'gparker', 'MoonRise#33'),
+(24, 'Anna', 'Foster', 'anna.foster@school.edu', 'afoster', 'WindEcho44!'),
+(25, 'Henry', 'Ward', 'henry.ward@school.edu', 'hward', 'CloudSky9$'),
+(26, 'Grace', 'Murphy', 'grace.murphy@school.edu', 'gmurphy', 'Snowy@Hill12'),
+(27, 'Leo', 'Bailey', 'leo.bailey@school.edu', 'lbailey', 'FoxTrot77!'),
+(28, 'Nina', 'Reed', 'nina.reed@school.edu', 'nreed', 'Storm*88Night'),
+(29, 'Ethan', 'Grant', 'ethan.grant@school.edu', 'egrant', 'TreeRoot3$'),
+(30, 'Zoe', 'Long', 'zoe.long@school.edu', 'zlong', 'Wave99&Lime'),
+(31, 'Max', 'Sanders', 'max.sanders@school.edu', 'msanders', 'Crimson41!'),
+(32, 'Emily', 'Cole', 'emily.cole@school.edu', 'ecole', 'BrightStar2!'),
+(33, 'Joshua', 'Morris', 'joshua.morris@school.edu', 'jmorris', 'JungleFire13'),
+(34, 'Bella', 'Hughes', 'bella.hughes@school.edu', 'bhughes', 'Golden@Path9'),
+(35, 'Adam', 'Gray', 'adam.gray@school.edu', 'agray', 'SlateStone#4'),
+(36, 'Tina', 'Freeman', 'tina.freeman@school.edu', 'tfreeman', 'SkyPulse8!'),
+(37, 'Owen', 'Price', 'owen.price@school.edu', 'oprice', 'SunGate55'),
+(38, 'Lucy', 'Dixon', 'lucy.dixon@school.edu', 'ldixon', 'OceanSong2*'),
+(39, 'Kyle', 'Jordan', 'kyle.jordan@school.edu', 'kjordan', 'CedarWind7'),
+(40, 'Natalie', 'Bennett', 'natalie.bennett@school.edu', 'nbennett', 'MoonDust@10');
+
+SELECT ID, LastName, Username, Password FROM Teachers
+WHERE ID > 20;
+
+--- Students Table ---
+
+INSERT INTO students (ID, Name, Age, Year, Gender, Image, Pronounce, ClassGroupID) VALUES
+(15, 'Henry Taylor', 12, 8, 'Male', 'https://example.com/mugshot15.png', 'henry-taylor.mp3', 5),
+(16, 'Amelia Brown', 13, 9, 'Female', 'https://example.com/mugshot16.png', 'amelia-brown.mp3', 7),
+(17, 'Lucas Johnson', 13, 7, 'Male', 'https://example.com/mugshot17.png', NULL, 2),
+(18, 'Olivia Anderson', 13, 11, 'Female', 'https://example.com/mugshot18.png', 'olivia-anderson.mp3', NULL),
+(19, 'Liam Harris', 14, 7, 'Male', 'https://example.com/mugshot19.png', 'liam-harris.mp3', 3),
+(20, 'Sophia Walker', 13, 8, 'Female', 'https://example.com/mugshot20.png', 'sophia-walker.mp3', 4),
+(21, 'Benjamin White', 14, 12, 'Male', 'https://example.com/mugshot21.png', NULL, NULL),
+(22, 'Isabella Lewis', 15, 10, 'Female', 'https://example.com/mugshot22.png', 'isabella-lewis.mp3', 12),
+(23, 'Noah Martin', 14, 9, 'Male', 'https://example.com/mugshot23.png', 'noah-martin.mp3', 8),
+(24, 'Mia Thompson', 12, 7, 'Female', 'https://example.com/mugshot24.png', 'mia-thompson.mp3', 1),
+(25, 'James Rodriguez', 15, 10, 'Male', 'https://example.com/mugshot25.png', NULL, 11),
+(26, 'Charlotte Scott', 13, 8, 'Female', 'https://example.com/mugshot26.png', 'charlotte-scott.mp3', 5),
+(27, 'Oliver King', 14, 7, 'Male', 'https://example.com/mugshot27.png', 'oliver-king.mp3', 3),
+(28, 'Amelia Carter', 14, 9, 'Female', 'https://example.com/mugshot28.png', NULL, 7),
+(29, 'William Wright', 13, 8, 'Male', 'https://example.com/mugshot29.png', 'william-wright.mp3', 6),
+(30, 'Ella Walker', 13, 7, 'Female', 'https://example.com/mugshot30.png', 'ella-walker.mp3', 2),
+(31, 'Henry Collins', 14, 9, 'Male', 'https://example.com/mugshot31.png', NULL, 8),
+(32, 'Emily Harris', 12, 10, 'Female', 'https://example.com/mugshot32.png', 'emily-harris.mp3', 11),
+(33, 'Jack Moore', 15, 11, 'Male', 'https://example.com/mugshot33.png', 'jack-moore.mp3', NULL),
+(34, 'Olivia Martinez', 16, 12, 'Female', 'https://example.com/mugshot34.png', 'olivia-martinez.mp3', NULL),
+(35, 'Lucas Green', 14, 10, 'Male', 'https://example.com/mugshot35.png', NULL, 12),
+(36, 'Mia Young', 13, 8, 'Female', 'https://example.com/mugshot36.png', 'mia-young.mp3', 6),
+(37, 'James White', 12, 7, 'Male', 'https://example.com/mugshot37.png', 'james-white.mp3', 1),
+(38, 'Amelia Walker', 14, 9, 'Female', 'https://example.com/mugshot38.png', 'amelia-walker.mp3', 7),
+(39, 'Noah King', 13, 8, 'Male', 'https://example.com/mugshot39.png', NULL, 4),
+(40, 'Charlotte Lee', 14, 10, 'Female', 'https://example.com/mugshot40.png', 'charlotte-lee.mp3', 10),
+(41, 'William Hill', 15, 12, 'Male', 'https://example.com/mugshot41.png', 'william-hill.mp3', NULL),
+(42, 'Sophia Scott', 13, 7, 'Female', 'https://example.com/mugshot42.png', 'sophia-scott.mp3', 2),
+(43, 'Benjamin Harris', 13, 9, 'Male', 'https://example.com/mugshot43.png', NULL, 9),
+(44, 'Emma White', 14, 10, 'Female', 'https://example.com/mugshot44.png', 'emma-white.mp3', 11),
+(45, 'Liam Johnson', 13, 7, 'Male', 'https://example.com/mugshot45.png', 'liam-johnson.mp3', 3),
+(46, 'Isabella Martinez', 15, 12, 'Female', 'https://example.com/mugshot46.png', NULL, NULL),
+(47, 'Jack Harris', 14, 11, 'Male', 'https://example.com/mugshot47.png', 'jack-harris.mp3', NULL),
+(48, 'Mia Thompson', 13, 8, 'Female', 'https://example.com/mugshot48.png', 'mia-thompson.mp3', 5),
+(49, 'James Lewis', 14, 9, 'Male', 'https://example.com/mugshot49.png', NULL, 9),
+(50, 'Ella Carter', 13, 7, 'Female', 'https://example.com/mugshot50.png', 'ella-carter.mp3', 1),
+(51, 'Henry Rodriguez', 14, 10, 'Male', 'https://example.com/mugshot51.png', 'henry-rodriguez.mp3', 10),
+(52, 'Emily Young', 15, 11, 'Female', 'https://example.com/mugshot52.png', NULL, NULL),
+(53, 'Oliver Scott', 13, 8, 'Male', 'https://example.com/mugshot53.png', 'oliver-scott.mp3', 6),
+(54, 'Charlotte Martinez', 13, 7, 'Female', 'https://example.com/mugshot54.png', 'charlotte-martinez.mp3', 2),
+(55, 'Benjamin Lee', 14, 9, 'Male', 'https://example.com/mugshot55.png', NULL, 7),
+(56, 'Sophia Brown', 14, 10, 'Female', 'https://example.com/mugshot56.png', 'sophia-brown.mp3', 12),
+(57, 'William Harris', 15, 12, 'Male', 'https://example.com/mugshot57.png', NULL, NULL),
+(58, 'Emma Johnson', 13, 7, 'Female', 'https://example.com/mugshot58.png', 'emma-johnson.mp3', 3),
+(59, 'Noah Lewis', 14, 8, 'Male', 'https://example.com/mugshot59.png', NULL, 5),
+(60, 'Mia White', 13, 9, 'Female', 'https://example.com/mugshot60.png', 'mia-white.mp3', 8),
+(61, 'Jack Anderson', 14, 10, 'Male', 'https://example.com/mugshot61.png', NULL, 11),
+(62, 'Isabella Scott', 13, 7, 'Female', 'https://example.com/mugshot62.png', 'isabella-scott.mp3', 1),
+(63, 'Liam Martin', 14, 9, 'Male', 'https://example.com/mugshot63.png', 'liam-martin.mp3', 9),
+(64, 'Amelia Walker', 15, 12, 'Female', 'https://example.com/mugshot64.png', NULL, NULL),
+(65, 'Henry Brown', 13, 10, 'Male', 'https://example.com/mugshot65.png', 'henry-brown.mp3', 10),
+(66, 'Ella Thompson', 12, 7, 'Female', 'https://example.com/mugshot66.png', 'ella-thompson.mp3', 2),
+(67, 'William Harris', 13, 9, 'Male', 'https://example.com/mugshot67.png', NULL, 8),
+(68, 'Sophia Johnson', 14, 10, 'Female', 'https://example.com/mugshot68.png', 'sophia-johnson.mp3', 11),
+(69, 'Benjamin King', 15, 11, 'Male', 'https://example.com/mugshot69.png', NULL, NULL),
+(70, 'Mia Lewis', 13, 7, 'Female', 'https://example.com/mugshot70.png', 'mia-lewis.mp3', 3),
+(71, 'Noah White', 14, 8, 'Male', 'https://example.com/mugshot71.png', NULL, 4),
+(72, 'Emma Brown', 13, 9, 'Female', 'https://example.com/mugshot72.png', 'emma-brown.mp3', 7),
+(73, 'James Harris', 14, 10, 'Male', 'https://example.com/mugshot73.png', NULL, 12),
+(74, 'Olivia Martin', 15, 12, 'Female', 'https://example.com/mugshot74.png', 'olivia-martin.mp3', NULL),
+(75, 'Lucas Johnson', 13, 7, 'Male', 'https://example.com/mugshot75.png', 'lucas-johnson.mp3', 1),
+(76, 'Charlotte Brown', 14, 9, 'Female', 'https://example.com/mugshot76.png', NULL, 9),
+(77, 'Henry Walker', 13, 8, 'Male', 'https://example.com/mugshot77.png', 'henry-walker.mp3', 6),
+(78, 'Sophia Lewis', 13, 7, 'Female', 'https://example.com/mugshot78.png', 'sophia-lewis.mp3', 3),
+(79, 'William Thompson', 14, 10, 'Male', 'https://example.com/mugshot79.png', NULL, 11),
+(80, 'Amelia White', 15, 11, 'Female', 'https://example.com/mugshot80.png', 'amelia-white.mp3', NULL),
+(81, 'Jack Johnson', 13, 7, 'Male', 'https://example.com/mugshot81.png', 'jack-johnson.mp3', 2),
+(82, 'Mia Brown', 14, 8, 'Female', 'https://example.com/mugshot82.png', NULL, 5),
+(83, 'James Anderson', 13, 9, 'Male', 'https://example.com/mugshot83.png', 'james-anderson.mp3', 8),
+(84, 'Olivia Walker', 14, 10, 'Female', 'https://example.com/mugshot84.png', NULL, 10),
+(85, 'Benjamin Harris', 15, 12, 'Male', 'https://example.com/mugshot85.png', 'benjamin-harris.mp3', NULL),
+(86, 'Ella Martin', 13, 7, 'Female', 'https://example.com/mugshot86.png', 'ella-martin.mp3', 1),
+(87, 'Noah Brown', 14, 8, 'Male', 'https://example.com/mugshot87.png', NULL, 4),
+(88, 'Sophia Lewis', 13, 9, 'Female', 'https://example.com/mugshot88.png', 'sophia-lewis.mp3', 7),
+(89, 'William Johnson', 14, 10, 'Male', 'https://example.com/mugshot89.png', NULL, 12),
+(90, 'Amelia Harris', 15, 11, 'Female', 'https://example.com/mugshot90.png', 'amelia-harris.mp3', NULL),
+(91, 'Liam Walker', 13, 7, 'Male', 'https://example.com/mugshot91.png', 'liam-walker.mp3', 3),
+(92, 'Charlotte Brown', 14, 8, 'Female', 'https://example.com/mugshot92.png', NULL, 5),
+(93, 'James Johnson', 13, 9, 'Male', 'https://example.com/mugshot93.png', 'james-johnson.mp3', 9),
+(94, 'Emma Harris', 14, 10, 'Female', 'https://example.com/mugshot94.png', NULL, 10),
+(95, 'Benjamin Thompson', 15, 12, 'Male', 'https://example.com/mugshot95.png', 'benjamin-thompson.mp3', NULL),
+(96, 'Mia Martin', 13, 7, 'Female', 'https://example.com/mugshot96.png', 'mia-martin.mp3', 2),
+(97, 'Oliver Brown', 14, 8, 'Male', 'https://example.com/mugshot97.png', NULL, 6),
+(98, 'Sophia Lee', 13, 9, 'Female', 'https://example.com/mugshot98.png', 'sophia-lee.mp3', 8),
+(99, 'William Walker', 14, 10, 'Male', 'https://example.com/mugshot99.png', NULL, 11),
+(100, 'Amelia Johnson', 15, 11, 'Female', 'https://example.com/mugshot100.png', 'amelia-johnson.mp3', NULL),
+(101, 'Jack Brown', 13, 7, 'Male', 'https://example.com/mugshot101.png', 'jack-brown.mp3', 1),
+(102, 'Isabella Harris', 14, 8, 'Female', 'https://example.com/mugshot102.png', NULL, 4),
+(103, 'Noah Thompson', 13, 9, 'Male', 'https://example.com/mugshot103.png', 'noah-thompson.mp3', 7),
+(104, 'Emma Martin', 14, 10, 'Female', 'https://example.com/mugshot104.png', NULL, 10),
+(105, 'Benjamin White', 15, 12, 'Male', 'https://example.com/mugshot105.png', 'benjamin-white.mp3', NULL),
+(106, 'Sophia King', 13, 7, 'Female', 'https://example.com/mugshot106.png', 'sophia-king.mp3', 2),
+(107, 'William Johnson', 14, 8, 'Male', 'https://example.com/mugshot107.png', NULL, 6),
+(108, 'Amelia Brown', 13, 9, 'Female', 'https://example.com/mugshot108.png', 'amelia-brown.mp3', 8),
+(109, 'James Walker', 14, 10, 'Male', 'https://example.com/mugshot109.png', NULL, 12),
+(110, 'Mia Harris', 15, 11, 'Female', 'https://example.com/mugshot110.png', 'mia-harris.mp3', NULL),
+(111, 'Liam Martin', 13, 7, 'Male', 'https://example.com/mugshot111.png', 'liam-martin.mp3', 3),
+(112, 'Olivia Thompson', 14, 8, 'Female', 'https://example.com/mugshot112.png', NULL, 5),
+(113, 'Jack Johnson', 13, 9, 'Male', 'https://example.com/mugshot113.png', 'jack-johnson.mp3', 9),
+(114, 'Charlotte Harris', 14, 10, 'Female', 'https://example.com/mugshot114.png', NULL, 11),
+(115, 'Benjamin Brown', 15, 12, 'Male', 'https://example.com/mugshot115.png', 'benjamin-brown.mp3', NULL),
+(116, 'Emma White', 16, 13, 'Female', 'https://example.com/mugshot116.png', 'emma-white.mp3', NULL),
+(117, 'James Lewis', 16, 13, 'Male', 'https://example.com/mugshot117.png', NULL, NULL),
+(118, 'Sophia Green', 17, 13, 'Female', 'https://example.com/mugshot118.png', 'sophia-green.mp3', NULL),
+(119, 'Liam Scott', 16, 13, 'Male', 'https://example.com/mugshot119.png', NULL, NULL),
+(120, 'Mia Brown', 16, 13, 'Female', 'https://example.com/mugshot120.png', 'mia-brown.mp3', NULL),
+(121, 'Oliver White', 15, 11, 'Male', 'https://example.com/mugshot121.png', NULL, NULL),
+(122, 'Ella Johnson', 16, 13, 'Female', 'https://example.com/mugshot122.png', 'ella-johnson.mp3', NULL),
+(123, 'Noah King', 15, 11, 'Male', 'https://example.com/mugshot123.png', NULL, NULL),
+(124, 'Amelia Harris', 16, 13, 'Female', 'https://example.com/mugshot124.png', 'amelia-harris.mp3', NULL),
+(125, 'Jack Brown', 17, 13, 'Male', 'https://example.com/mugshot125.png', NULL, NULL),
+(126, 'Isabella Scott', 16, 13, 'Female', 'https://example.com/mugshot126.png', 'isabella-scott.mp3', NULL),
+(127, 'Henry Lee', 15, 11, 'Male', 'https://example.com/mugshot127.png', NULL, NULL),
+(128, 'Sophia Martin', 16, 13, 'Female', 'https://example.com/mugshot128.png', 'sophia-martin.mp3', NULL),
+(129, 'William Harris', 17, 13, 'Male', 'https://example.com/mugshot129.png', NULL, NULL);
+
+SELECT ID, Name, Year, ClassGroupID FROM Students
+WHERE ClassGroupID = 8;
+
+SELECT * FROM Courses;
+
+--- Students with their courses ---
+SELECT * FROM Students 
+ JOIN StudentCourses ON StudentCourses.StudentID = Students.ID
+ JOIN Courses ON Courses.ID = StudentCourses.CourseID 
+ WHERE Students.ID = 11;
+
+ --- Students with their name and image ---
+ SELECT Students.Name, Students.Image FROM Students;
+
+--- Select id and name ---
+SELECT Students.ID, Students.Name
+FROM Students
+JOIN StudentCourses ON Students.ID = StudentCourses.StudentID
+WHERE StudentCourses.CourseID = 1;
+
+--- Select student's id, name, age, year, gender, image, pronounce, classgorupid, and subjects, and teacher's firstname and last name ---
+SELECT Students.ID, Students.Name, Students.Age, Students.Year, Students.Gender, 
+Students.Image, Students.Pronounce, Students.ClassGroupID, Subjects.Name AS Subjects, Teachers.FirstName, 
+Teachers.LastName 
+FROM Students
+JOIN StudentCourses ON Students.ID = StudentCourses.StudentID
+JOIN Courses ON StudentCourses.CourseID = Courses.ID
+JOIN Subjects ON Courses.SubjectID = Subjects.ID
+JOIN Teachers ON Courses.TeacherID = Teachers.ID
+WHERE Students.ID = 1;
+
+--- Select the year and teacher's first name ---
+SELECT DISTINCT YearLevels.Year, Teachers.FirstName
+            FROM Courses
+            JOIN YearLevels ON Courses.YearLevelID = YearLevels.ID
+            JOIN Teachers ON Courses.TeacherID = Teachers.ID
+            WHERE Courses.TeacherID = ?;
+
+--- SELECT the id of the course, classgroup ID, and the name of the group ---
+SELECT Courses.ID, Courses.ClassGroupID, ClassGroups.Name
+FROM Courses 
+JOIN ClassGroups ON Courses.ClassGroupID = ClassGroups.ID
+WHERE Courses.TeacherID = 1 AND ClassGroups.ID = 7;
+
+--- Select the id, username, password, role, and first name of the user ---
+SELECT User.id, User.username, User.password, User.role, Teachers.FirstName
+FROM User
+JOIN Teachers ON User.username = Teachers.Username
+WHERE User.username = "ethompson";
+
+
+
+

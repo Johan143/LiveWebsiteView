@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<nav class="w3-bar">
+    <div class="w3-bar-item">
+        <div class="logo">
+            <h1> Logo </h1> 
+        </div>
+    </div>
+    <div class="w3-bar-item">
+        <div class="welcome-teacher">
+            <h3>Welcome, <br> Teacher {{ teacher.first_name }}!</h3>
+        </div>
+    </div>
+    <div class="teacher-navigation">
+        <h1><a href="/logout" class="w3-bar-item w3-button" >Log Out</a></h1>
+    </div>
+</nav>
+
+<style>
+  html, body {
+    height: auto;
+    overflow: hidden;
+  }
+</style>
+
+<table class="years-table">
+    {% for year in years|unique %}
+    <tr>
+        <td> <a href="/teacher/{{ teacher.id }}/year/{{ year[0] }}" class="btn years-table-btn">Year {{ year[0] }}</a> </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1> signup </h1>
+
+<!-- A form to signup with -->
+<!-- the ACTION is the route we try to post to! -->
+<div class = "signup">
+    <form action="/signup" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username">
+        <label for="password">Password</label>
+        <input type="password" name="password">
+        <button type="submit">Signup</button>
+    </form>
+</div>
+{% endblock %}

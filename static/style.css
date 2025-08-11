@@ -1,0 +1,302 @@
+body,h1,h2,h3,h4,h5,h6 {font-family: Poppins, sans-serif;}
+
+/* Set the background color for the entire page */
+body {
+    background-color: #0b0040;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    color: #ffffff; /* Set the text color to white */
+}
+
+.six-column {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1em;
+    padding: 1em;
+}
+
+.six-column .w3-card-4 {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.six-column .w3-card-4 img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 150px; /* Set a maximum height for the image */
+}
+
+
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Make the right column smaller */
+    gap: 1em;
+    padding: 1em;
+}
+
+.two-column .w3-card-4 {
+    position: relative; /* without the position relative, the image will 
+                           position itself to the entire page */
+    width: auto; 
+    height: 100%; /* Set the height to auto to maintain aspect ratio */
+    
+}
+
+.two-column .w3-card-4 img {
+    max-width: 250px; /* Set a maximum width for the image */
+    max-height: 250px; /* Set a maximum height for the image */
+    position: absolute; /* position absoulte made the image relate to w3-card-4 
+                           and position there */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* student info table css */
+
+.two-column .student-info-table table {
+    position: relative;
+    text-align: left;
+    line-height: 2;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    font-size: 22px;
+    
+}
+
+.two-column .student-info-table th {
+    font-weight: 900;
+    background-color: #f2f2f2;
+    padding-left: 15px;
+
+}
+
+.two-column .student-info-table td {
+    padding-left: 15px;
+    font-weight: normal;
+}
+
+/* courses table css */
+
+.two-column .info .courses-table {
+    line-height: 1;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+
+
+.two-column .info .courses-table table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.two-column .info .courses-table th {
+    background-color: #f2f2f2;
+    font-weight: 900;
+}
+
+.two-column .info .courses-table td {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.two-column .info.w3-card-4 .courses-table table {
+    width: 100%;
+    border-collapse: collapse;
+   
+   
+}
+
+/* button css */
+
+.btn {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 10px 20px; 
+    background-color: rgb(218, 38, 38);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 10rem;
+    z-index: 2;
+    text-decoration: none;
+
+    transition: all 0.4s;
+
+    
+}
+
+.btn:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.years-table-btn {
+    font-size: 18px;
+    font-weight: 700;
+    padding-left: 4em; 
+    padding-right: 4em;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: rgb(218, 38, 38);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 10rem;
+    z-index: 2;
+    text-decoration: none;
+
+    transition: all 0.4s;
+}
+
+.years-table-btn:hover {
+    background-color: #940101
+}
+
+/* image slideshow css */
+/* This is how you can create a slideshow using CSS animations without using JavaScript. 
+   The images will change every 5 seconds. 
+.slideshow {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: slideshow 30s ease-in-out infinite;
+    z-index: -1;
+    }
+
+@keyframes slideshow {
+    0% { background-image: url('/static/images/Image1.jpeg'); }
+    25% { background-image: url('/static/images/Image2.avif'); }
+    50% { background-image: url('/static/images/Image3.jpeg'); }
+    75% { background-image: url('/static/images/Image4.jpeg'); }
+    100% { background-image: url('/static/images/Image1.jpeg'); }
+} */
+
+/* login form css */
+.login form {
+    border: 3px solid #f1f1f1;
+    padding: 16px;
+    
+
+
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    margin-left: 50em;
+    width: 25em;
+    height: 16em;
+    line-height: 2em;
+    background-color: #f2f2f2;
+    font-family: Poppins, sans-serif;
+    
+
+}
+
+/* home navigation bar css */
+.w3-bar .home-navigation {
+    margin-left: 50em;
+}
+
+.w3-bar .w3-bar-item .logo {
+    margin-left: 5em;
+}
+
+/* teacher navigation bar css */
+.w3-bar .teacher-navigation {
+    margin-left: 72.5em;
+}
+
+.w3-bar .w3-bar-item .welcome-teacher h3 {
+    margin-left: 5em;
+    font-size: 1.5em;
+}
+
+
+/* years table css in teacher.html */
+.years-table {
+    position: absolute;
+    z-index: 1000;
+    border-left: none;
+    border-right: 2px solid white;
+    border-top: none;
+    border-bottom: none;
+    padding-left: 1em;
+    padding-right: 1.4em;
+    padding-bottom: 25em;
+    padding-top: 14em;
+    top: 0;
+
+
+
+
+}
+
+.years-table td {
+    border: none;
+    padding-bottom: 1.5em;
+}
+
+/* years students css in year_students */
+.back-year-students {
+    padding-left: 20em;
+}
+
+/* group css in year_students */
+.groups a.btn {
+    margin-left: 6em;
+    padding-left: 4em;
+    padding-right: 4em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    display: inline-block;
+}
+
+.groups {
+    margin-left: 22em;
+}
+
+/* classgroup css for students 3 column */
+.three-column-students {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left: 25em;
+    padding-right: 8em;
+    row-gap: 2em;
+    /* Allow vertical scrolling */
+    max-height: calc(100vh - 150px); /* adjust 150px to account for header space */
+    overflow-y: auto;
+    padding-bottom: 1em;
+}
+
+.three-column-students .w3-card-4 {
+    width: 13em;
+    height: 13em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    
+}
+
+.three-column-students .w3-card-4 img {
+    width: auto;
+    height: auto;
+    max-width: 10em;
+    max-height: 10em; /* Set a maximum height for the image */
+    
+}

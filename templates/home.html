@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<nav class="w3-bar">
+    <div class="w3-bar-item">
+        <div class="logo">
+            <h1> Logo </h1> 
+        </div>
+    </div>
+    <div class="home-navigation">
+        <h1><a href="/" class="w3-bar-item w3-button" >Home</a></h1>
+        <h1><a href="/logout" class="w3-bar-item w3-button" >Log Out</a></h1>
+        <h1><a href="/signup" class="w3-bar-item w3-button" >Sign Up</a></h1>
+    </div>
+</nav>
+
+
+<!--<div class="slideshow"> -->
+
+<button class="btn">Learn More</button>
+
+
+
+<h1> Login </h1>
+
+<div class ="login">
+        <form action="/login" method="post">
+            <div>
+                <label for="username"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="username" required>
+            </div>
+            <div>
+                <label for="password"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        
+        </form>
+</div>
+
+
+
+{% endblock %}
